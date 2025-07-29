@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting...</title>
+  <script>
+    // Extract the query params (e.g., ?code=AUTH_CODE&state=xyz)
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    const state = params.get("state");
+
+    if (code) {
+      // OPTIONAL: Send the code to your backend via POST or redirect
+      // Example: Redirect to backend server with the code
+      window.location.href = `https://your-backend.com/oauth/callback?code=${code}&state=${state}`;
+    } else {
+      document.write("❌ Authorization code missing.");
+    }
+  </script>
+</head>
+<body>
+  <p>🔁 Redirecting you back to the app...</p>
+</body>
+</html>
