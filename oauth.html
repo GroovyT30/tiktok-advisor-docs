@@ -2,23 +2,16 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Redirecting...</title>
-  <script>
-    // Extract the query params (e.g., ?code=AUTH_CODE&state=xyz)
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
-    const state = params.get("state");
-
-    if (code) {
-      // OPTIONAL: Send the code to your backend via POST or redirect
-      // Example: Redirect to backend server with the code
-      window.location.href = `https://your-backend.com/oauth/callback?code=${code}&state=${state}`;
-    } else {
-      document.write("❌ Authorization code missing.");
-    }
-  </script>
+  <title>OAuth Success</title>
+  <style>
+    body { font-family: sans-serif; text-align: center; padding: 50px; }
+    a { color: #007bff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
 </head>
 <body>
-  <p>🔁 Redirecting you back to the app...</p>
+  <h1>✅ TikTok Authorization Complete</h1>
+  <p>You’ve successfully logged in with TikTok.</p>
+  <p><a href="https://groovyt30.github.io/tiktok-advisor-docs/">Return to the dashboard</a></p>
 </body>
 </html>
