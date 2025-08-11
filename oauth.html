@@ -1,17 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>OAuth Success</title>
+  <meta charset="UTF-8" />
+  <title>TikTok OAuth Callback</title>
   <style>
     body { font-family: sans-serif; text-align: center; padding: 50px; }
-    a { color: #007bff; text-decoration: none; }
-    a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <h1>✅ TikTok Authorization Complete</h1>
-  <p>You’ve successfully logged in with TikTok.</p>
-  <p><a href="https://groovyt30.github.io/tiktok-advisor-docs/">Return to the dashboard</a></p>
+  <h1>Authenticating...</h1>
+  <p>Please wait while we log you in.</p>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get('code');
+    const state = params.get('state');
+
+    if (code) {
+      fetch('http://127.0.0.1:5000/api/oauth/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          code: code,
+          redirect_uri: 'https://GroovyT30.github.io/tiktok-advisor-docs/oauth.html'
+        }),
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.access_token) {
+          localStorage.setItem('access_token', data.access_token);
+          window.location.href = '/';  // Redirect to your React app main page
+        } else {
+          document.body.innerHTML = '<h1>Authentication failed</h1><p>Please try logging in again.</p>';
+        }
+      })
+      .catch(() => {
+        document.body.innerHTML = '<h1>Error</h1><p>Unable to communicate with backend.</p>';
+      });
+    } else {
+      document.body.innerHTML = '<h1>No authorization code found</h1><p>Please try logging in again.</p>';
+    }
+  </script>
 </body>
 </html>
